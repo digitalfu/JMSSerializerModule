@@ -1,5 +1,5 @@
 {
-    "name": "iceshack/jms-serializer-module",
+    "name": "sp/jms-serializer-module",
     "description": "Zend Framework 2 Module that integrates the jms serializer library",
     "type": "library",
     "license": "MIT",
@@ -46,9 +46,6 @@
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "dev-master"
-    },
-	"preferred-install": {											
-	    "*": "dist"
     },
     "minimum-stability": "dev",
     "autoload": {
