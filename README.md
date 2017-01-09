@@ -1,7 +1,7 @@
 JMSSerializerModule
 ===================
 
-Zend Framework2 integration for the [jms serializer library](https://github.com/schmittjoh/serializer)
+Zend Framework3 integration for the [jms serializer library](https://github.com/schmittjoh/serializer)
 
 Documentation
 -------------
