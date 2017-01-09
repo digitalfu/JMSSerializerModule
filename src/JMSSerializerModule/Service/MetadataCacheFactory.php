@@ -2,8 +2,13 @@
 
 namespace JMSSerializerModule\Service;
 
+use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\ContainerException;
+use JMSSerializerModule\Options\Metadata;
 use Metadata\Cache\FileCache;
 use RuntimeException;
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -12,12 +17,21 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class MetadataCacheFactory extends AbstractFactory
 {
     /**
-     * {@inheritDoc}
+     * Create an object
+     *
+     * @param  ContainerInterface $container
+     * @param  string             $requestedName
+     * @param  null|array         $options
+     * @return object
+     * @throws ServiceNotFoundException if unable to resolve the service.
+     * @throws ServiceNotCreatedException if an exception is raised when
+     *     creating a service.
+     * @throws ContainerException if any other error occurs
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var $options \JMSSerializerModule\Options\Metadata */
-        $options = $this->getOptions($serviceLocator, 'metadata');
+        /** @var $options Metadata */
+        $options = $this->getOptions($container, 'metadata');
         if ($options->getCache() == 'none') {
             return null;
         } elseif ($options->getCache() == 'file') {
@@ -31,7 +45,7 @@ class MetadataCacheFactory extends AbstractFactory
             return new FileCache($dir);
         }
 
-        return $serviceLocator->get($options->getCache());
+        return $container->get($options->getCache());
     }
 
     /**
@@ -39,6 +53,6 @@ class MetadataCacheFactory extends AbstractFactory
      */
     public function getOptionsClass()
     {
-        return 'JMSSerializerModule\Options\Metadata';
+        return Metadata::class;
     }
 }

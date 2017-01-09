@@ -1,62 +1,64 @@
 <?php
+namespace JMSSerializerModule\config;
 
-/*
- * This file is part of the JMSSerializerModule package.
- *
- * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+use DateTime;
+use JMS\Serializer\EventDispatcher\Subscriber\DoctrineProxySubscriber;
+use JMS\Serializer\Handler\ArrayCollectionHandler;
+use JMS\Serializer\Handler\DateHandler;
+use JMS\Serializer\JsonDeserializationVisitor;
+use JMS\Serializer\JsonSerializationVisitor;
+use JMS\Serializer\XmlDeserializationVisitor;
+use JMS\Serializer\XmlSerializationVisitor;
+use JMS\Serializer\YamlSerializationVisitor;
 
-return array(
-    'jms_serializer' => array(
-        'handlers' => array(
-            'datetime' => array(
-                'default_format' => \DateTime::ISO8601,
+return [
+    'jms_serializer' => [
+        'handlers' => [
+            'datetime' => [
+                'default_format' => DateTime::ISO8601,
                 'default_timezone' => date_default_timezone_get(),
-            ),
-            'subscribers' => array(
-                'jms_serializer.datetime_handler',
-                'jms_serializer.array_collection_handler',
-            ),
-        ),
-        'eventdispatcher' => array(
-            'subscribers' => array(
-                'jms_serializer.doctrine_proxy_subscriber'
-            )
-        ),
-        'property_naming' => array(
+            ],
+            'subscribers' => [
+                DateHandler::class,
+                ArrayCollectionHandler::class,
+            ],
+        ],
+        'event_dispatcher' => [
+            'subscribers' => [
+                DoctrineProxySubscriber::class,
+            ],
+        ],
+        'property_naming' => [
             'separator' => '_',
             'lower_case' => true,
-            'enable_cache' => true
-        ),
-        'metadata' => array(
+            'enable_cache' => true,
+        ],
+        'metadata' => [
             'cache' => 'file',
             'annotation_cache' => 'array',
             'debug' => false,
-            'file_cache' => array(
+            'file_cache' => [
                 'dir' => 'data/JMSSerializerModule',
-            ),
+            ],
             'infer_types_from_doctrine_metadata' => true,
-            'directories' => array()
-        ),
-        'visitors' => array(
-            'json' => array(
-                'options' => 0
-            ),
-            'xml' => array(
-                'doctype_whitelist' => array(),
-            ),
-            'serialization' => array(
-                'json' => 'jms_serializer.json_serialization_visitor',
-                'xml' => 'jms_serializer.xml_serialization_visitor',
-                'yml' => 'jms_serializer.yaml_serialization_visitor',
-            ),
-            'deserialization' => array(
-                'json' => 'jms_serializer.json_deserialization_visitor',
-                'xml' => 'jms_serializer.xml_deserialization_visitor',
-            ),
-        )
-    ),
-);
+            'directories' => [],
+        ],
+        'visitors' => [
+            'json' => [
+                'options' => 0,
+            ],
+            'xml' => [
+                'doctype_whitelist' => [],
+            ],
+            'serialization' => [
+                'json' => JsonSerializationVisitor::class,
+                'xml'  => XmlSerializationVisitor::class,
+                'yml'  => YamlSerializationVisitor::class,
+            ],
+            'deserialization' => [
+                'json' => JsonDeserializationVisitor::class,
+                'xml'  => XmlDeserializationVisitor::class,
+            ],
+        ],
+    ],
+];
