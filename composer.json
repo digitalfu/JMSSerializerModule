@@ -40,12 +40,15 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zend-servicemanager": "2.*",
+        "zendframework/zend-servicemanager": "3.*",
         "doctrine/doctrine-module": ">=0.5.1",
         "jms/serializer": "1.*"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "dev-master"
+    },
+	"preferred-install": {											
+	    "*": "dist"
     },
     "minimum-stability": "dev",
     "autoload": {
