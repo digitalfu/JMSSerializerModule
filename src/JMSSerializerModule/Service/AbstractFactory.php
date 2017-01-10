@@ -45,7 +45,7 @@ abstract class AbstractFactory implements FactoryInterface
 
         $optionsClass = $this->getOptionsClass();
 
-        if (false === in_array(AbstractOptions::class, class_implements($optionsClass))) {
+        if (false === in_array(AbstractOptions::class, class_parents($optionsClass))) {
             throw new RuntimeException(sprintf(
                 "Invalid options class: '%s::getOptionsClass() method is required to return a concrete
                 implementation of %s.",

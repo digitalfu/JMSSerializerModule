@@ -35,7 +35,7 @@ use JMSSerializerModule\Service\MetadataCacheFactory;
 use JMSSerializerModule\Service\MetadataDriverFactory;
 use JMSSerializerModule\Service\NamingStrategyFactory;
 use JMSSerializerModule\Service\SerializerFactory;
-use JMSSerializerModule\View\Serializer;
+use JMS\Serializer\Serializer;
 use Metadata\Cache\CacheInterface;
 use Metadata\ClassHierarchyMetadata;
 use Metadata\Driver\DriverChain;
@@ -51,7 +51,7 @@ return [
         'jms_serializer.object_constructor' => UnserializeObjectConstructor::class,
         'jms_serializer.handler_registry' => HandlerRegistry::class,
         'jms_serializer.datetime_handler' => DateHandler::class,
-        'jms_serializer.event_dispatcher' => DateHandler::class,
+        'jms_serializer.event_dispatcher' => EventDispatcher::class,
         'jms_serializer.metadata.cache' => MetadataCacheFactory::class,
         'jms_serializer.metadata.yaml_driver' => YamlDriver::class,
         'jms_serializer.metadata.xml_driver' => XmlDriver::class,
